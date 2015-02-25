@@ -103,8 +103,8 @@ function display()
   print("Reactor Status")
   print(ft())
   print("")
-  local funcs={"Connected","Active","NumberOfControlRods","EnergyStored","EnergyPercent","Temperature","FuelAmount","WasteAmount","FuelAmountMax","EnergyProducedLastTick"}
-  local units={"","","","RF","%","C","mB","mB","mB","RF/t"}
+  local funcs={"Connected","Active","NumberOfControlRods","EnergyStored","FuelTemperature","FuelAmount","WasteAmount","FuelAmountMax","EnergyProducedLastTick"}
+  local units={"","","","RF","C","mB","mB","mB","RF/t"}
   local values={}
   for _,v in pairs(funcs) do
     values[#values+1] = tostring(r["get"..v]())
