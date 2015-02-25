@@ -16,7 +16,6 @@ local emax=10000000
 local ok,msg=pcall(function ()
 local r
 local m
-local redirected=false
 local p
 
 function findDev (dType)
@@ -29,7 +28,7 @@ function findDev (dType)
   return nil, dType..": not found"
 end
 
-function setupDevs()    
+function setupDevs()
   r=assert(findDev("BigReactors-Reactor"))
   if (not r.getConnected()) then
     return nil, "Computer port not connected to a valid reactor"
@@ -48,10 +47,7 @@ function setupDevs()
     return math.floor(r.nativeEPLT()*1000)/1000
   end
 
-  if redirected then
-    term.restore()
-    redirected = false
-  end
+  term.redirect(term.native())
   m=findDev("monitor")
   if m then
     m.setTextScale(0.5)
@@ -59,7 +55,6 @@ function setupDevs()
     term.setCursorPos(1,1)
     print("Redirecting to attached monitor")
     term.redirect(m)
-    redirected = true
   end
 
   term.setCursorBlink(false)
@@ -113,7 +108,7 @@ function display()
   local valW=tableWidth(values)
   for i,v in pairs(funcs) do
     print(rjust(v,funcW)..": "..rjust(values[i],valW).." "..units[i])
-  end  
+  end
 end
 
 log("Starting")
@@ -138,5 +133,5 @@ while true do
 end
 
 end)
-term.restore()
+term.redirect(term.native())
 error(msg)
